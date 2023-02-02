@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        th, td {
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even){background-color: #f2f2f2}
+        
+        th {
+          background-color: #04AA6D;
+          color: white;
+        }
+        input[type="text"]{
+            border: none;
+            background-color: rgba(227, 35, 35, 0.226);
+            padding: 0.5rem .2rem;
+            border-radius: .2rem;
+            margin: .5rem .2rem;
+        }
+        </style>
+</head>
+<body>
+    <input type="text" id="search_bar" onkeyup=search() placeholder="Search">
+  
+    <table id="data_table">
+        <tr>
+            <th onclick=sortTable(0)>NAME</th>
+            <th onclick=sortTable(1)>GENDER</th>
+            <th onclick=sortTable(2)>CITY</th>
+            <th onclick=sortTable(3)>STATE</th>
+            <th onclick=sortTable(4)>COUNTRY</th>
+        </tr>
+    </table>
+    <script src="client.js"></script>
+    
+</body>
+</html>
