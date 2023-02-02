@@ -1,0 +1,82 @@
+let add_data = document.getElementById("add_data");
+let page=1;
+const results=5;
+
+window.onscroll = function() {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        fetch_data(page,results);
+    }
+};
+window.onload=fetch_data(page,30);
+async function fetch_data(pag,result){
+    page+=1;
+    const data=await fetch(`http://127.0.0.1:700/?page=${pag}&results=${result}&seed=abc`);
+    const dataa=await data.json();
+    let table=document.getElementById('data_table');
+    dataa.results.map((person)=>{ 
+        let tab_row=document.createElement('tr');
+        let name_row=document.createElement('td');
+        name_row.innerText=person.name.first;
+        let gender_row=document.createElement('td');
+        gender_row.innerText=person.gender;
+        let city_row=document.createElement('td');
+        city_row.innerText=person.location.city;
+        let state_row=document.createElement('td');
+        state_row.innerText=person.location.state;
+        let country_row=document.createElement('td');
+        country_row.innerText=person.location.country;
+        tab_row.appendChild(name_row);
+        tab_row.appendChild(gender_row);
+        tab_row.appendChild(city_row);                
+        tab_row.appendChild(state_row);
+        tab_row.appendChild(country_row);
+        table.appendChild(tab_row);    
+    })
+    document.body.appendChild(table);
+}
+
+function search(){
+    let value = document.getElementById("search_bar").value.toLowerCase();
+    let table = document.getElementById("data_table");
+    let row=table.rows
+    for (i = 1; i < (row.length); i++) {
+        cols=row[i].getElementsByTagName("TD");
+        let flag=false;
+        for(data of cols){
+            console.log(value,data)
+            if(data.innerHTML.toLowerCase().includes(value)){
+                flag=true;
+                break;
+            }
+        }
+        if (flag==false){
+            row[i].style.display="none";
+        }
+        else{
+            row[i].style.display="";
+        }
+    }
+}
+
+function sortTable(coln_num) {
+    let table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("data_table");
+    switching = true;
+    while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("TD")[coln_num];
+            y = rows[i + 1].getElementsByTagName("TD")[coln_num];
+            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+            }
+      }
+      if (shouldSwitch) {
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+      }
+    }
+  }
